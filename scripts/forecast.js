@@ -10,20 +10,24 @@ const getWeather = async (id)=>{
     const response = await fetch (base + query);
     const data = await response.json();
 
-    console.log(data);
+    return data[0];
 
 };
 
-//for city information
+//for city information //for getting key code to pass into id
 const getCity = async (city) =>{
     const base = 'http://dataservice.accuweather.com/locations/v1/cities/search'
     const query = `?apikey=${key}&q=${city}`;
 
     const response = await fetch(base + query);
     const data = await response.json();
-    return (data[0]);
+    return (data[0]); 
 };
 
-//getCity('manchester').then(data=>console.log(data)).catch(err=>console.log(err))
+getCity('manchester').then(data=>{
+    return getWeather(data.Key);
+}).then(data =>{
+    console.log(data);
+}).catch(err=>console.log(err));
 
-getWeather("329260");   
+//getWeather("329260"); 
